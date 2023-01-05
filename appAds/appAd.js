@@ -1,19 +1,4 @@
 class disableBackBtn{
-	/*
-	USAGE
-
-	var back=new disableBackBtn();	//MAKE THE OBJECT...to make object always use 'back' as reference
-
-	// TO DISABLE
-	back.disable();
-	// TO DISABLE FOR 3 TIMES BACK PRESS
-	back.disable(3);
-
-	// TO ENABLE
-	back.disable();
-
-	:::remember only one can be used in one time and one object formatino.
-	*/
 	static nchange=0;
 	disable(n){
 		if(n){
@@ -28,21 +13,7 @@ class disableBackBtn{
 	}
 	repeatHash(){
 		if(!location.hash.includes(this.preHash)){
-			console.log(disableBackBtn.nchange)
 			location.hash+=this.preHash="dis_"+disableBackBtn.nchange;
-		}
-	}
-	pressAgainToExit(fn){
-		if(fn){
-			location.hash+=this.pressedAgainHash="dis_"+1;
-
-			setTimeout(()=>{
-				window.addEventListener("hashchange",()=>{
-					if(!location.hash.includes(this.pressedAgainHash)){
-						fn();
-					}
-				});	
-			},200)
 		}
 	}
 	enable(){
@@ -72,7 +43,7 @@ class appAd{
 		play: ['#00a173','Install',"#fff"],
 	}
 
-	static domain="https://aimodules.netlify.app/appAds/";
+	static domain="file:///media/ravan/WORKSPACE/www/html%20projects/appAds//";
 
 	loadTime=5000
 	constructor(adNum){
@@ -88,13 +59,15 @@ class appAd{
 			refLnk:appAd.allApps[adNum][3],
 			plateform: appAd.allApps[adNum][4],
 		};
-		console.log(this.ad);
 		appAd.loadFilePre("video",this.ad.vid);//_________add full path for video
 		appAd.loadFilePre("img",this.ad.img);
-		console.log(appAd.domain+'imgs/'+this.ad.plateform+'.png');
 		appAd.loadFilePre("img",appAd.domain+'imgs/'+this.ad.plateform+'.png');
 	}
 	showAd(){
+		[...document.querySelectorAll('audio'),...document.querySelectorAll('video')].forEach(val=>{
+			val.pause();
+		});
+
 		this.makeUi();
 		this.videoBox=document.querySelector("#appAdVid");
 		this.videoBox.play().then(()=>{
@@ -105,7 +78,6 @@ class appAd{
 	}
 
 	closeAd(){
-		console.log('came to close');
 		var videoBox=document.querySelector("#appAdVid");
 		if(videoBox){
 			videoBox.remove();
@@ -151,7 +123,6 @@ class appAd{
 
 	makeUi(){
 		var pfuidata=this.dataForApp[this.ad.plateform];
-		console.log(pfuidata);
 		var html=`
 <style>
 .flex{display: flex;align-items: center;justify-content: center;}.c{flex-flow: column;}.w100p{width: 100%}
@@ -163,7 +134,7 @@ class appAd{
 	aspect-ratio: 16/9;
 }
 </style>
-<div class="addPanBg flex c" style="position: fixed; width: 100%; height: 100vh; background: #fff;top: 0;left: 0;">
+<div class="addPanBg flex c" style="margin: 0;position: fixed; width: 100%; height: 100vh; background: #fff;top: 0;left: 0;">
 	<div class="appAdMain flex c" style="justify-content: flex-start; max-width: 500px; width: 100vw; height: 100vh;">
 		<div class="top w100p flex" style="margin: 30px 0; padding: 10px; align-items: stretch; justify-content: flex-start;">
 			${this.ad.img!=''?`<img src="${this.ad.img}" class="logo" width="100px" height="100px" style="border-radius: 10px; margin-right: 20px;"  alt='rozdhan icon'>`:""}
@@ -188,5 +159,3 @@ class appAd{
 
 
 }
-
-
