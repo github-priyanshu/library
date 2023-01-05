@@ -72,7 +72,7 @@ class appAd{
 		play: ['#00a173','Install',"#fff"],
 	}
 
-	static domain="http://0.0.0.0:8000/";
+	static domain="https://aimodules.netlify.app/appAds/";
 
 	loadTime=5000
 	constructor(adNum){
