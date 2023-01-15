@@ -41,7 +41,7 @@ class appAd{
 		[
 			'CashKaro - Cashback & Coupons',
 			"https://play-lh.googleusercontent.com/Mu6eDEbbDf2d4f_rVIPkx9eG5QNfBU0eaCcNQgzuSj5GH3FQ8NxeRJjTx4BQl5SG_4w=w150-h150-rw",
-			15,
+			9,
 			"https://play.google.com/store/apps/details?id=com.cashkaro&referrer=r%3D19585273%26refname%3DPriyanshu%20Kumar%26utm_source%3Dapp_referral",
 			"play"
 		],
@@ -154,7 +154,7 @@ class appAd{
 		<div class="top w100p flex" style="margin: 30px 0; padding: 10px; align-items: stretch; justify-content: flex-start;">
 			${this.ad.img!=''?`<img src="${this.ad.img}" class="logo" width="100px" height="100px" style="border-radius: 10px; margin-right: 20px;"  alt=''>`:""}
 			<div class="right flex c" style="justify-content: space-between; align-items: flex-start;">
-				<p style="font-size: 1.8em;">${this.ad.name}</p>
+				<p style="font-size: 1.5em;">${this.ad.name}</p>
 				<img src="${appAd.domain}/imgs/${this.ad.plateform}.png" alt="${this.ad.plateform} icon" style="height: 25px;">
 			</div>
 		</div>
