@@ -41,7 +41,7 @@ class appAd{
 		[
 			'CashKaro - Cashback & Coupons',
 			"https://play-lh.googleusercontent.com/Mu6eDEbbDf2d4f_rVIPkx9eG5QNfBU0eaCcNQgzuSj5GH3FQ8NxeRJjTx4BQl5SG_4w=w150-h150-rw",
-			9,
+			13,
 			"https://play.google.com/store/apps/details?id=com.cashkaro&referrer=r%3D19585273%26refname%3DPriyanshu%20Kumar%26utm_source%3Dapp_referral",
 			"play"
 		],
