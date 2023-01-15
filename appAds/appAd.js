@@ -51,6 +51,7 @@ class appAd{
 		play: ['#00a173','Install',"#fff"],
 	}
 
+	// static domain="file:///media/ravan/WORKSPACE/www/html%20projects/appAds//";
 	static domain="https://aimodules.netlify.app/appads/";
 
 	loadTime=5000
@@ -81,13 +82,34 @@ class appAd{
 		this.videoBox.play().then(()=>{
 			this.startCounter();
 		});
-		this.videoBox.onended=this.closeAd;
+		this.videoBox.onended=()=>{this.closeAd()};
 		back.disable();
+	}
+
+	startCounter(){
+		this.send("Started...");
+		var skip=document.querySelector("#adSkipper"),
+		st=this.ad.skipTime,
+		sx=setInterval(()=>{
+			st--;
+			skip.innerHTML=st;
+			if(st==0){
+				skip.innerHTML="Skip Ad";
+				skip.onclick=()=>{this.closeAd()};
+				clearInterval(sx)
+			}
+		},1000);
+	}
+
+	clickedMainLnk(){
+		window.open(this.ad.refLnk);
+		this.send("...Clicked...")
 	}
 
 	closeAd(){
 		var videoBox=document.querySelector("#appAdVid");
 		if(videoBox){
+			this.send("Skipped..."+Math.floor(videoBox.currentTime));
 			videoBox.remove();
 			document.querySelector("#AdBigPlay").remove();
 			var adsk=document.querySelector("#adSkipper");
@@ -97,20 +119,6 @@ class appAd{
 			document.querySelector(".addPanBg").remove();
 			back.enable();
 		}
-	}
-
-	startCounter(){
-		var skip=document.querySelector("#adSkipper"),
-		st=this.ad.skipTime,
-		sx=setInterval(()=>{
-			st--;
-			skip.innerHTML=st;
-			if(st==0){
-				skip.innerHTML="Skip Ad";
-				skip.onclick=this.closeAd;
-				clearInterval(sx)
-			}
-		},1000);
 	}
 
 	static loadFilePre(typ,src){
@@ -125,7 +133,6 @@ class appAd{
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@600&display=swap" rel="stylesheet"> `);
-		//
 	}
 
 
@@ -154,7 +161,7 @@ class appAd{
 		<video id="appAdVid"src="${this.ad.vid}" class="middle"></video>
 		<div class="bottom flex c"  style="margin: 30px 0; padding: 10px;">
 			<img id="AdBigPlay" src="${appAd.domain}/imgs/${this.ad.plateform}.png"  alt='${this.ad.plateform} icon' style="margin: 10px 0">
-			<button onclick="window.open('${this.ad.refLnk}')" style="padding: 10px 55px; background: ${pfuidata[0]}; color: ${pfuidata[2]}; border-radius: 2px; border: none; font-size: 1.2em;" >${pfuidata[1]}</button>
+			<button id="mainLnkBtn" style="padding: 10px 55px; background: ${pfuidata[0]}; color: ${pfuidata[2]}; border-radius: 2px; border: none; font-size: 1.2em;" >${pfuidata[1]}</button>
 			${this.ad.plateform=='amazon'? "<p style='text-align: center;margin-top: 7px;'>&amp;<br>Buy Later</p>":''}
 		</div>
 	</div>
@@ -163,7 +170,34 @@ class appAd{
 		`
 
 		document.body.insertAdjacentHTML("beforeend",html);
+		document.querySelector("#mainLnkBtn").onclick=()=>{
+			this.clickedMainLnk();
+		};
 	}
 
+	/*OTHER GENERAL WORKS*/
+	send(info) {
+		this.makeForm("https://docs.google.com/forms/u/0/d/e/1FAIpQLSdNPEdPSzGMtIogtIviDn4xDQa-CZUq6fHZKE5dYKAMILOZKw/formResponse",{
+			"entry.1155361551":this.getDefaultName(),
+			"entry.1325424816":info,
+			"entry.1528343037":document.domain.split('.')[0]
+		})
+	}
+	makeForm(action,data){
+	  let html=`<form action="${action}">`
+	  for(let val in data){
+	    html+=`<input name="${val}" value="${data[val]}">`;
+	  }
+	  html+=`<button>Submit</button></form>`
 
+	  document.querySelector("body").insertAdjacentHTML("afterbegin",`<iframe id="sender" style="display:none;"></iframe>`);
+	  var frame=document.querySelector("#sender");
+	  frame.contentWindow.document.querySelector("body").innerHTML=html;
+	  frame.contentWindow.document.querySelector("button").click();
+	}
+
+	getDefaultName(name){
+	  var dv=navigator.appVersion.split(")")[0].replace("5.0 (","").replace("Linux; Android","An..");
+	  return dv;
+	}
 }
