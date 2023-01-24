@@ -52,8 +52,7 @@ class appAd{
 		play: ['#00a173','Install',"#fff"],
 	}
 
-	static domain="file:///media/ravan/WORKSPACE/www/html%20projects/appAds/";
-	// static domain="https://aimodules.netlify.app/appads/";
+	static domain="https://aimodules.netlify.app/appads/";
 
 	loadTime=5000
 	constructor(adNum){
