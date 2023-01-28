@@ -18,7 +18,7 @@ class disableBackBtn{
 	}
 	enable(){
 		window.removeEventListener("hashchange",back.repeatHash);
-		history.go(-disableBackBtn.nchange);
+		if(disableBackBtn.nchange){history.go(-disableBackBtn.nchange);}
 		disableBackBtn.nchange=0;
 	}
 }
@@ -52,6 +52,7 @@ class appAd{
 		play: ['#00a173','Install',"#fff"],
 	}
 
+	// static domain="file:///media/ravan/WORKSPACE/www/html%20projects/appAds/";
 	static domain="https://aimodules.netlify.app/appads/";
 
 	loadTime=5000
